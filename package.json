@@ -1,6 +1,6 @@
 {
   "name": "docs-oracle",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Query any docs powered by Mintlify — CLI + library",
   "author": "kalil0321 <kalil.bouzigues@gmail.com>",
   "license": "MIT",

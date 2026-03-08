@@ -1,11 +1,16 @@
 #!/usr/bin/env node
 
+declare const __VERSION__: string;
+declare const __NAME__: string;
+
 import { text, isCancel, cancel } from "@clack/prompts";
 import chalk from "chalk";
 import { Marked } from "marked";
 import { markedTerminal } from "marked-terminal";
 import { askStream } from "./client.js";
 import type { DocsOracleResponse } from "./types.js";
+
+process.title = __NAME__;
 
 const g = chalk.green;
 const gB = chalk.greenBright;
@@ -36,7 +41,7 @@ function renderMarkdown(content: string): string {
 
 function banner() {
   console.log();
-  console.log(`  ${gB("◆")} ${bold("docs-oracle")}  ${dim("by")} ${bold("kalil0321")}`);
+  console.log(`  ${gB("◆")} ${bold("docs-oracle")} ${dim(`v${__VERSION__}`)}`);
   console.log(`  ${dim("query any docs powered by mintlify")}`);
   console.log();
 }
@@ -78,8 +83,14 @@ function createSpinner() {
 
 async function main() {
   const args = process.argv.slice(2);
+
+  if (args.includes("--version") || args.includes("-v")) {
+    console.log(`${__NAME__} v${__VERSION__}`);
+    return;
+  }
+
   const jsonFlag = args.includes("--json");
-  const positional = args.filter((a) => a !== "--json");
+  const positional = args.filter((a) => !a.startsWith("--"));
 
   let url = positional[0];
   let question = positional[1];
